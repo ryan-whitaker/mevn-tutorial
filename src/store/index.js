@@ -1,12 +1,13 @@
-import { createStore } from 'vuex'
+import { createStore } from 'vuex';
 
-export default createStore({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
-})
+import authModule from './modules/auth/index.js'
+import surveysModule from './modules/surveys/index.js'
+
+const store = createStore({
+    modules: {
+        auth: authModule,
+        surveys: surveysModule
+    }
+});
+
+export default store;
