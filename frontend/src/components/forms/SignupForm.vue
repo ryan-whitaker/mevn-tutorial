@@ -25,24 +25,27 @@ export default {
     },
     methods: {
         async signup() {
-            const body = {
+            const actionPayload = {
                 name: this.name,
                 email: this.email,
                 password: this.password
             };
-            console.log(body)
-            const response = await fetch(`${process.env.VUE_APP_EXPRESS_ROUTE}/users/signup`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(body)
-            });
 
-            console.log(response)
+            await this.$store.dispatch('signup', actionPayload);
+            this.$router.replace('/surveys');
+            
+            // const response = await fetch(`${process.env.VUE_APP_EXPRESS_ROUTE}/users/signup`, {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify(body)
+            // });
 
-            const responseData = await response.json();
-            console.log(responseData);
+            // console.log(response)
+
+            // const responseData = await response.json();
+            // console.log(responseData);
         }
     }
 }

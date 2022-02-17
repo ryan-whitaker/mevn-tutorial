@@ -13,7 +13,9 @@
         :creatorId="survey.creatorId"
         :mayPublish="survey.mayPublish"
         ></survey-item>
+        <p v-if="!areSurveys">There are no surveys to see. Create one to populate the list!</p>
     </ul>
+    
 </template>
 
 <script>
@@ -27,6 +29,13 @@ export default {
         surveyArray() {
             return this.$store.getters['surveys/surveys'];            
         },
+        areSurveys() {
+            if (this.surveyArray.length > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     },
     methods: {
         async loadSurveys() {
@@ -58,5 +67,12 @@ ul {
 h2 {
     margin: 0 0 10px 0;
     text-align: center;
+}
+
+p {
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    margin-top: 200px;
 }
 </style>

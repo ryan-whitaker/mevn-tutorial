@@ -30,7 +30,8 @@ export default {
             },
             body: JSON.stringify({
                 email: payload.email,
-                password: payload.password
+                password: payload.password,
+                name: payload.name
             })
         });
         const responseData = await response.json();
@@ -43,8 +44,7 @@ export default {
             context.commit('setUser', {
                 userId: responseData.user._id,                
                 token: responseData.idToken,
-                userName: responseData.user.name,
-                
+                userName: responseData.user.name,                
             });
 
             localStorage.setItem('userId', responseData.user._id);

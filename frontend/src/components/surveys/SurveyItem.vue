@@ -74,7 +74,7 @@ li {
 }
 
 .invisible {
-    opacity: .6;
+    background-image: linear-gradient(to bottom right,#a5b9bb, #749191);
 }
 
 .survey-results {
