@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/surveys', SurveyRoutes);
 app.use('/users', UserRoutes);
 
-const mongoUri = "mongodb://localhost:27017";
+const mongoUri = "mongodb://0.0.0.0:27017";
 
 mongoose.connect(mongoUri, {
     useNewUrlParser: true,
