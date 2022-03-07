@@ -14,7 +14,7 @@ router.use(cors({
         callback(null, inAcceptList);
     },
     methods:["GET", "PUT", "POST", "DELETE"],
-    allowedHeaders:["Origin", "X-Requested-With", "Content-Type", "Accept"],
+    allowedHeaders:["Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization"],
     maxAge:-1
 }));
   

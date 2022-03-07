@@ -1,16 +1,19 @@
 const express = require('express');
+const auth = require('../middleware/auth');
 
 const router = express.Router();
 
 const Survey = require('../models/survey');
 
 // Get all surveys
-router.post('/all', async(req, res) => {
+router.post('/all', auth, async(req, res) => {
+    const userId = req.user._id
+    // console.log(req.body.userId)
     const filteredSurveys = [];
     const allSurveys = await Survey.find();
 
     allSurveys.forEach(survey => {
-        if (survey.creatorId === req.body.userId) {
+        if (survey.creatorId === userId) {
             filteredSurveys.push(survey);
         } else if (survey.mayPublish === true) {
             filteredSurveys.push(survey);
@@ -28,7 +31,8 @@ router.post('/new', async(req, res) => {
 });
 
 // Delete a survey
-router.post('/delete', async(req, res) => {
+router.post('/delete', auth, async(req, res) => {
+    
 
     Survey.find({_id: req.body.surveyId}, 'creatorId', async(err, docs) => {
         const creatorId = docs[0].creatorId;
