@@ -14,8 +14,7 @@
         :mayPublish="survey.mayPublish"
         ></survey-item>
         <p v-if="!areSurveys">There are no surveys to see. Create one to populate the list!</p>
-    </ul>
-    
+    </ul>    
 </template>
 
 <script>

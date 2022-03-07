@@ -88,5 +88,4 @@ button:hover {
     background-color: #F64740;
     transition: .2s;
 }
-
 </style>

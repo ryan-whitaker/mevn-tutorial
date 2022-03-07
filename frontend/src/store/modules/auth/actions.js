@@ -26,7 +26,7 @@ export default {
         const response = await fetch(url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-type': 'application/json'
             },
             body: JSON.stringify({
                 email: payload.email,
@@ -43,12 +43,12 @@ export default {
             
             context.commit('setUser', {
                 userId: responseData.user._id,                
-                token: responseData.idToken,
+                token: responseData.token,
                 userName: responseData.user.name,                
             });
 
             localStorage.setItem('userId', responseData.user._id);
-            localStorage.setItem('token', responseData.idToken);
+            localStorage.setItem('token', responseData.token);
             localStorage.setItem('userName', responseData.user.name);           
         }        
     },

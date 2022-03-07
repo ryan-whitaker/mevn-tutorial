@@ -4,7 +4,8 @@ export default {
         const response = await fetch(`${process.env.VUE_APP_EXPRESS_ROUTE}/surveys/all`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + context.rootGetters.token
             },
             body: JSON.stringify(body)
         });
@@ -18,10 +19,12 @@ export default {
             userId: context.rootGetters.userId,
             surveyId: payload.id
         };
+        
         const response = await fetch(`${process.env.VUE_APP_EXPRESS_ROUTE}/surveys/delete`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': context.rootGetters.token
             },
             body: JSON.stringify(body)
         });
