@@ -1,7 +1,7 @@
 export default {
     async getSurveys(context) {
         const body = { userId: context.rootGetters.userId };
-        const response = await fetch(`${process.env.VUE_APP_EXPRESS_ROUTE}/surveys/all`, {
+        const response = await fetch(`http://localhost:3000/surveys/all`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -20,7 +20,7 @@ export default {
             surveyId: payload.id
         };
         
-        const response = await fetch(`${process.env.VUE_APP_EXPRESS_ROUTE}/surveys/delete`, {
+        const response = await fetch(`http://localhost:3000/surveys/delete`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -30,6 +30,16 @@ export default {
         });
         const responseData = await response.json();
         console.log(responseData) 
+    },
+    async createSurvey(context, payload) {
+        await fetch(`http://localhost:3000/surveys/new`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': context.rootGetters.token
+            },
+            body: JSON.stringify(payload)
+        })
     },
     clearSurveys(context) {
         context.commit('setSurveys', []);

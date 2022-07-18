@@ -1,17 +1,16 @@
 <template>
-<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
-  <the-header></the-header>
+    <the-header></the-header>
     <main>
       <router-view></router-view>
     </main>
 </template>
 
 <script>
-import TheHeader from './components/UI/TheHeader'
+import TheHeader from './components/ui/TheHeader'
 
 export default {
   components: {
-    TheHeader
+    TheHeader,
   },
   created() {
         this.$store.dispatch('autoLogin');

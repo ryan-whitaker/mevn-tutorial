@@ -8,15 +8,18 @@ const User = require('../models/user');
 
 router.post('/signup', async (req, res) => {
     const user = new User(req.body);
-
-    try {
-        await user.save();
-        const token = await user.generateAuthToken();
-        console.log(token);
-        res.status(201).send({ user, token });
-    } catch (error) {
-        res.status(400).send(error);
-    };
+    if (await User.findOne({ email: user.email})) {
+        const error = "Email already taken!"
+        res.status(400).send({ message: error })
+    } else {
+        try {
+            await user.save();
+            const token = await user.generateAuthToken();
+            res.status(201).send({ user, token });
+        } catch (e) {
+            res.status(400).send(e);
+        };
+    }    
 });
 
 router.post('/login', async (req, res) => {

@@ -6,7 +6,10 @@ const middleware = require('./middleware/mw');
 const SurveyRoutes = require('./routes/survey');
 const UserRoutes = require('./routes/user');
 
+const path = `${__dirname}/views/`
+
 const app = express();
+app.use(express.static(path))
 app.use(middleware);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -26,7 +29,7 @@ mongoose.connect(mongoUri, {
 const port = 3000;
 
 app.get('/', (req, res) => {
-    res.send("Express app works!");
+    res.sendFile(`${path}index.html`)
 });
 
 app.listen(port, () => {

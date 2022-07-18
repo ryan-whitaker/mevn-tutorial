@@ -7,8 +7,9 @@
         <div class="form-element">
             <input type="password" class="form-input" placeholder="Password" v-model="password">
         </div>
-        <button>Login</button>
-    </form>
+        <p :class="{ 'active': (isError === true) }">{{ errorMessage }}</p>
+        <button>Login</button>        
+    </form>    
 </template>
 
 <script>
@@ -16,17 +17,28 @@ export default {
     data() {
         return {
             email: '',
-            password: ''
+            password: '',
+            isError: false,
+            errorMessage: null
         }
     },
     methods: {
         async login() {
+            this.isError = false;
+            this.errorMessage = null;
+            
             const actionPayload = {
+                mode: 'login',
                 email: this.email,
                 password: this.password
             };
-            await this.$store.dispatch('login', actionPayload);
-            this.$router.replace('/surveys');
+            this.errorMessage = await this.$store.dispatch('auth', actionPayload);
+            if (this.errorMessage !== null) {
+                this.isError = true;
+            } else {
+                this.$router.replace('/surveys');
+            }
+            
         }
     }
 }
@@ -34,7 +46,7 @@ export default {
 
 <style scoped>
 .login-form {
-    height: 350px;
+    height: auto;
     width: 500px;
     background-color: #ddd;
     border-radius: 15px;
@@ -87,5 +99,16 @@ button {
 button:hover {
     background-color: #F64740;
     transition: .2s;
+}
+
+p {
+    width: 100%;
+    color: red;
+    text-align: center;
+    display: none;
+}
+
+.active {
+    display: block;
 }
 </style>

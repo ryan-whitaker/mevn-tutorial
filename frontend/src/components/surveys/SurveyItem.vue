@@ -1,9 +1,6 @@
 <template>
     <li :class="{ 'user-created': (isUserCreated === true), 'invisible': (mayPublish === false) }">
-        <div class="survey-results" >
-            <div class="delete-container" :class="{ 'inactive': (isUserCreated === false) }">                
-                <button @click="removeListItem(_id)" class="delete-btn"><i class="fa fa-trash" aria-hidden="true"></i></button>
-            </div>
+        <div class="survey-results">            
             <div class="item-container">
                 <div class="item-label">Name</div>
                 <div class="item-value">{{ name }}</div>
@@ -24,6 +21,9 @@
                 <div class="item-label">Comments</div>
                 <div class="item-value">{{ comments }}</div>
             </div>
+            <div class="delete-container" :class="{ 'inactive': (isUserCreated === false) }">                
+                <button @click="removeListItem(_id)" class="delete-btn"><i class="fa fa-trash" aria-hidden="true"></i></button>
+            </div>
             <input type="hidden" value="{{ creatorId }}">
         </div>        
     </li>
@@ -36,13 +36,11 @@ export default {
         isUserCreated() {            
             const userId = this.$store.getters.userId
             if (this.creatorId === userId) {
-
                 return true;
             } else {
                 return false;
             }
-        }
-         
+        }         
     },
     methods: {
         async removeListItem(id) {
@@ -54,35 +52,28 @@ export default {
 </script>
 
 <style scoped>
-
 li {
     width: 100%;
     height: 100px;
     background-image: linear-gradient(to bottom right,#197BBD, #0e5c91);
-    /* background-color: #197BBD; */
     border-radius: 10px;
     margin-bottom: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
 }
-
 .user-created {
     background-image: linear-gradient(to bottom right,#19bdb5, #0e9191);
 }
-
 .inactive {
     display: none;
 }
-
 .invisible {
     background-image: linear-gradient(to bottom right,#a5b9bb, #749191);
 }
-
 .survey-results {
     width: 100%;
     height: 80px;
     float: left;
 }
-
 .delete-container {
     width: 10%;
     height: 100%;
@@ -90,23 +81,19 @@ li {
     text-align: center;
     padding-top: 37.5px;
 }
-
 .delete-btn {
     background-color: transparent;    
     border: none;
 }
-
 .fa-trash {
-    margin-top: ;
+    /* margin-top: ; */
     color: #fff;
     font-size: 25px;
     cursor: pointer;
 }
-
 .fa-trash:hover {
     color: #F64740;
 }
-
 .item-container {
     float: left;
     width: calc(90% / 5);
@@ -114,16 +101,13 @@ li {
     color: #292929;
     padding: 15px;
 }
-
 .item-label {
     font-weight: bold;
     font-size: 15px;
     margin-bottom: 5px;
 }
-
 .item-value {
     color: #fff;
     font-size: 17px;
 }
-
 </style>

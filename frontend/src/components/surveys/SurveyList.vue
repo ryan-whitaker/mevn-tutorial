@@ -24,12 +24,48 @@ export default {
     components: {
         SurveyItem
     },
+    // data() {
+    //     return {
+    //         testSurveys: [
+    //             {
+    //                 _id: 123456,
+    //                 creatorName: "Ryan",
+    //                 profession: "IT Data Specialist",
+    //                 product: "Keyboard",
+    //                 rating: "Very satisfied",
+    //                 comments: "Worked as expected",
+    //                 creatorId: this.$store.getters.userId,
+    //                 mayPublish: true
+    //             },
+    //             {
+    //                 _id: 987654,
+    //                 creatorName: "Ryan",
+    //                 profession: "IT Data Specialist",
+    //                 product: "Monitor",
+    //                 rating: "Very satisfied",
+    //                 comments: "Worked good",
+    //                 creatorId: this.$store.getters.userId,
+    //                 mayPublish: false
+    //             },
+    //             {
+    //                 _id: 456123,
+    //                 creatorName: "Not Ryan",
+    //                 profession: "IT Data Specialist",
+    //                 product: "Monitor",
+    //                 rating: "Not satisfied",
+    //                 comments: "Did not work as expected",
+    //                 creatorId: 123456789,
+    //                 mayPublish: true
+    //             }
+    //         ]
+    //     }
+    // },
     computed: {
         surveyArray() {
             return this.$store.getters['surveys/surveys'];            
         },
         areSurveys() {
-            if (this.surveyArray.length > 0) {
+            if (this.surveyArray && this.surveyArray.length > 0) {
                 return true;
             } else {
                 return false;
@@ -38,7 +74,8 @@ export default {
     },
     methods: {
         async loadSurveys() {
-            await this.$store.dispatch('surveys/getSurveys');          
+            await this.$store.dispatch('surveys/getSurveys');
+            console.log(this.surveyArray)
         }       
     },
     created() {
@@ -74,4 +111,4 @@ p {
     font-size: 20px;
     margin-top: 200px;
 }
-</style>
+</style>123

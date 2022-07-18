@@ -1,16 +1,17 @@
 <template>
-    <form class="login-form" @submit.prevent="signup">
+    <form @submit.prevent="signup">
         <h2>Sign Up</h2>
         <div class="form-element">
-            <input type="text" class="form-input" placeholder="Name" v-model="name" />
+            <input type="text" class="form-input" placeholder="Name" v-model="name" required/>
         </div>
         <div class="form-element">
-            <input type="email" class="form-input" placeholder="Email" v-model="email" />
+            <input type="email" class="form-input" placeholder="Email" v-model="email" required/>
         </div>
         <div class="form-element">
-            <input type="password" class="form-input" placeholder="Password" v-model="password" />
+            <input type="password" class="form-input" placeholder="Password" v-model="password" required/>
         </div>
-        <button>Sign Up</button>
+        <p class="error" v-if="isError">{{ errorMessage }}</p>
+        <button>Sign Up</button>        
     </form>
 </template>
 
@@ -18,42 +19,38 @@
 export default {
     data() {
         return {
-            name: '',
-            email: '',
-            password: ''
+            name: null,
+            email: null,
+            password: null,
+            isError: false,
+            errorMessage: null,
         }
     },
     methods: {
         async signup() {
-            const actionPayload = {
+            const payload = {
+                mode: 'signup',
                 name: this.name,
                 email: this.email,
                 password: this.password
             };
 
-            await this.$store.dispatch('signup', actionPayload);
-            this.$router.replace('/surveys');
-            
-            // const response = await fetch(`${process.env.VUE_APP_EXPRESS_ROUTE}/users/signup`, {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: JSON.stringify(body)
-            // });
-
+            this.errorMessage = await this.$store.dispatch('auth', payload);
+            if (this.errorMessage) {
+                this.isError = true;
+            } else {
+                this.isError = false;
+            }
             // console.log(response)
-
-            // const responseData = await response.json();
-            // console.log(responseData);
+            // this.$router.replace('/surveys');
         }
     }
 }
 </script>
 
 <style scoped>
-.login-form {
-    height: 400px;
+form {
+    height: auto;
     width: 500px;
     background-color: #ddd;
     border-radius: 15px;
@@ -108,4 +105,8 @@ button:hover {
     transition: .2s;
 }
 
+p {
+    color: red;
+    text-align: center;
+}
 </style>

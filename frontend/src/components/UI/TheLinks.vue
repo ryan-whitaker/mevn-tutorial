@@ -26,9 +26,9 @@ export default {
     }
   },
   methods: {
-    logout() {
+    logout() {      
       this.$store.dispatch('logout');
-      this.$store.dispatch('surveys/clearSurveys');
+      this.$store.dispatch('surveys/clearSurveys');      
       this.$router.replace('/login');
     }
   }
@@ -72,5 +72,4 @@ a.active {
   border-radius: 5px;
   transition: .2s;
 }
-
 </style>

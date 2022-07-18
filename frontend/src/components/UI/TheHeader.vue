@@ -1,21 +1,22 @@
 <template>
-    <div class="header-container">
+    <div>
         <h1>Product Surveys</h1>
         <the-links></the-links>
     </div>    
 </template>
 
 <script>
-import TheLinks from './TheLinks.vue'
+import TheLinks from './TheLinks.vue';
+
 export default {
     components: {
         TheLinks
     }
-}
+};
 </script>
 
 <style scoped>
-.header-container {
+div {
     width: 100%;
     height: 60px;
     background-color: #197BBD;

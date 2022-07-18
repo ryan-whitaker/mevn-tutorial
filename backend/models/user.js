@@ -42,6 +42,18 @@ const userSchema = new mongoose.Schema({
     timestamps: true
 });
 
+// Hash plain text password before saving
+userSchema.pre('save', async function(next) {
+    const user = this;
+
+    if (user.isModified('password')) {
+        user.password = await bcrypt.hash(user.password, 8);
+    };
+
+    next();
+});
+
+// Remove password and tokens
 userSchema.methods.toJSON = function() {
     const user = this;
     const userObject = user.toObject();
@@ -83,17 +95,5 @@ userSchema.statics.findByCredentials = async (email, password) => {
     return user;
 };
 
-// Hash plain text password before saving
-userSchema.pre('save', async function(next) {
-    const user = this;
-
-    if (user.isModified('password')) {
-        user.password = await bcrypt.hash(user.password, 8);
-    };
-
-    next();
-});
-
 const User = mongoose.model('User', userSchema);
-
 module.exports = User;

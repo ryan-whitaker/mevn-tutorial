@@ -1,27 +1,7 @@
 export default {
-    async login(context, payload) {
-        return await context.dispatch('auth', {
-            ...payload,
-            mode: 'login'
-        });
-    },
-    async signup(context, payload) {
-        return await context.dispatch('auth', {
-            ...payload,
-            mode: 'signup'
-        });
-    },
     async auth(context, payload) {
-        const mode = payload.mode;
 
-        let action;
-        if (mode === 'signup') {
-            action = 'signUp';
-        } else if (mode === 'login') {            
-            action = 'login';
-        }
-
-        let url = `${process.env.VUE_APP_EXPRESS_ROUTE}/users/${action}`;
+        let url = `http://localhost:3000/users/${payload.mode}`;
 
         const response = await fetch(url, {
             method: 'POST',
@@ -33,24 +13,23 @@ export default {
                 password: payload.password,
                 name: payload.name
             })
-        });
-        const responseData = await response.json();
+        });        
 
-        if (!response.ok) {            
-            const error = new Error(responseData.message || 'Failed to authenticate. Check your username and password and try again.');
-            throw error;
+        if (!response.ok) {
+            const error = 'Authentication failed. Check your username and password.';
+            return error;
         } else {
-            
+            const responseData = await response.json();
             context.commit('setUser', {
                 userId: responseData.user._id,                
                 token: responseData.token,
                 userName: responseData.user.name,                
             });
-
             localStorage.setItem('userId', responseData.user._id);
             localStorage.setItem('token', responseData.token);
-            localStorage.setItem('userName', responseData.user.name);           
-        }        
+            localStorage.setItem('userName', responseData.user.name);            
+            return null;
+        };
     },
     autoLogin(context) {
         const token = localStorage.getItem('token');
@@ -62,7 +41,6 @@ export default {
             userId: userId,
             userName: userName
         });
-
     },
     logout(context) {
         localStorage.removeItem('token');
